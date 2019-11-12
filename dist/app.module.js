@@ -14,7 +14,7 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
-        imports: [mongoose_1.MongooseModule.forRoot('mongodb://localhost/ecommerce')],
+        imports: [mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI)],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
