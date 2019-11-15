@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+
 import { Product } from './product';
 import { User } from './user';
 
