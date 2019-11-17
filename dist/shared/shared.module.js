@@ -6,20 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const common_1 = require("@nestjs/common");
+const user_schema_1 = require("./../models/user.schema");
 const mongoose_1 = require("@nestjs/mongoose");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const shared_module_1 = require("./shared/shared.module");
-const auth_module_1 = require("./auth/auth.module");
-let AppModule = class AppModule {
+const common_1 = require("@nestjs/common");
+const user_service_1 = require("./user.service");
+let SharedModule = class SharedModule {
 };
-AppModule = __decorate([
+SharedModule = __decorate([
     common_1.Module({
-        imports: [mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI), shared_module_1.SharedModule, auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_schema_1.UserSchema }])],
+        providers: [user_service_1.UserService],
+        exports: [user_service_1.UserService],
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], SharedModule);
+exports.SharedModule = SharedModule;
+//# sourceMappingURL=shared.module.js.map

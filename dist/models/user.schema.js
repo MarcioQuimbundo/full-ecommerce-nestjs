@@ -1,7 +1,8 @@
-import * as mongoose from 'mongoose';
-import * as bcrypt from 'bcrypt';
-
-export const UserSchema = new mongoose.Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+exports.UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     seller: {
@@ -17,20 +18,21 @@ export const UserSchema = new mongoose.Schema({
         zip: Number
     },
     created: {
-        type: Date,  
+        type: Date,
         default: Date.now,
     }
 });
-
-UserSchema.pre("save", async function(next: mongoose.HookNextFunction){
+exports.UserSchema.pre("save", async function (next) {
     try {
-        if(!this.isModified('password')) {
+        if (!this.isModified('password')) {
             return next();
         }
         const hashed = await bcrypt.hash(this['password'], 10);
         this['password'] = hashed;
         return next();
-    } catch(err) {
+    }
+    catch (err) {
         return next(err);
     }
 });
+//# sourceMappingURL=user.schema.js.map
