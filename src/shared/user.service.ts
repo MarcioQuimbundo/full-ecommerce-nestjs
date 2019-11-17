@@ -10,9 +10,7 @@ export class UserService {
   constructor(@InjectModel('User') private userModel: Model<User>) {}
 
   private sanitizerUser(user: User) {
-    const sanitized = user.toObject();
-    delete sanitized['password'];
-    return sanitized;
+    return user.depopulate('password');
   }
 
   async create(userDTO: RegisterDTO) {
@@ -40,5 +38,10 @@ export class UserService {
     } else {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async findByPayload(payload: any) {
+    const { username } = payload;
+    return await this.userModel.findOne({ username });
   }
 }

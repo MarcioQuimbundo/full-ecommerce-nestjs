@@ -22,9 +22,7 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     sanitizerUser(user) {
-        const sanitized = user.toObject();
-        delete sanitized['password'];
-        return sanitized;
+        return user.depopulate('password');
     }
     async create(userDTO) {
         const { username } = userDTO;
@@ -49,6 +47,10 @@ let UserService = class UserService {
         else {
             throw new common_2.HttpException('Invalid credentials', common_1.HttpStatus.UNAUTHORIZED);
         }
+    }
+    async findByPayload(payload) {
+        const { username } = payload;
+        return await this.userModel.findOne({ username });
     }
 };
 UserService = __decorate([

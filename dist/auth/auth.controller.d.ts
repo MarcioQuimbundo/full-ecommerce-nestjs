@@ -1,8 +1,19 @@
+import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './auth.dto';
 import { UserService } from './../shared/user.service';
 export declare class AuthController {
     private userService;
-    constructor(userService: UserService);
-    login(userDTO: LoginDTO): Promise<any>;
-    register(userDTO: RegisterDTO): Promise<any>;
+    private authService;
+    constructor(userService: UserService, authService: AuthService);
+    tempAuth(): {
+        auth: string;
+    };
+    login(userDTO: LoginDTO): Promise<{
+        user: import("../types/user").User;
+        token: string;
+    }>;
+    register(userDTO: RegisterDTO): Promise<{
+        user: import("../types/user").User;
+        token: string;
+    }>;
 }

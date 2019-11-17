@@ -5,6 +5,7 @@ export declare class UserService {
     private userModel;
     constructor(userModel: Model<User>);
     private sanitizerUser;
-    create(userDTO: RegisterDTO): Promise<any>;
-    findByLogin(userDTO: LoginDTO): Promise<any>;
+    create(userDTO: RegisterDTO): Promise<User>;
+    findByLogin(userDTO: LoginDTO): Promise<User>;
+    findByPayload(payload: any): Promise<User>;
 }

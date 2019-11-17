@@ -6,15 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const jwt_strategy_1 = require("./jwt.strategy");
 const shared_module_1 = require("./../shared/shared.module");
 const common_1 = require("@nestjs/common");
 const auth_controller_1 = require("./auth.controller");
+const auth_service_1 = require("./auth.service");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     common_1.Module({
         controllers: [auth_controller_1.AuthController],
         imports: [shared_module_1.SharedModule],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
     })
 ], AuthModule);
 exports.AuthModule = AuthModule;

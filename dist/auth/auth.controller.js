@@ -12,19 +12,45 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const auth_service_1 = require("./auth.service");
 const user_service_1 = require("./../shared/user.service");
 const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
 let AuthController = class AuthController {
-    constructor(userService) {
+    constructor(userService, authService) {
         this.userService = userService;
+        this.authService = authService;
+    }
+    tempAuth() {
+        console.log("auth testando");
+        return { auth: 'works' };
     }
     async login(userDTO) {
-        return await this.userService.findByLogin(userDTO);
+        const user = await this.userService.findByLogin(userDTO);
+        const payload = {
+            username: user.username,
+            seller: user.seller,
+        };
+        const token = await this.authService.signPayload(payload);
+        return { user, token };
     }
     async register(userDTO) {
-        return await this.userService.create(userDTO);
+        const user = await this.userService.create(userDTO);
+        const payload = {
+            username: user.username,
+            seller: user.seller,
+        };
+        const token = await this.authService.signPayload(payload);
+        return { user, token };
     }
 };
+__decorate([
+    common_1.Get(),
+    common_1.UseGuards(passport_1.AuthGuard('jwt')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "tempAuth", null);
 __decorate([
     common_1.Post('login'),
     __param(0, common_1.Body()),
@@ -41,7 +67,8 @@ __decorate([
 ], AuthController.prototype, "register", null);
 AuthController = __decorate([
     common_1.Controller('auth'),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        auth_service_1.AuthService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map
