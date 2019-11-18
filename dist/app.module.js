@@ -12,13 +12,12 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const shared_module_1 = require("./shared/shared.module");
 const auth_module_1 = require("./auth/auth.module");
-const tasks_controller_1 = require("./tasks/tasks.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
         imports: [mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI), shared_module_1.SharedModule, auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController, tasks_controller_1.TasksController],
+        controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);
